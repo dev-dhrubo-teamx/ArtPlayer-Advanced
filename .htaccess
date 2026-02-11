@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Only redirect if request is direct browser navigation
+RewriteCond %{REQUEST_URI} \.mp4$ [NC]
+
+# Must NOT come from player page
+RewriteCond %{HTTP_REFERER} !player\.html [NC]
+
+# Only redirect if Accept header contains text/html
+RewriteCond %{HTTP_ACCEPT} text/html
+
+RewriteRule ^(.*\.mp4)$ /player.html?file=https://%{HTTP_HOST}/$1 [R=302,L]
